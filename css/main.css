@@ -6,6 +6,7 @@
 #upload_json_file_label{
     display:block;
     background-color:#345;
+    background:url(images/favicon.png);
     color:aqua;
     user-select:none;
 
@@ -17,3 +18,4 @@
 #upload_json_file{
     display:none;
 }
+
