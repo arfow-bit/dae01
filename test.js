@@ -60,6 +60,44 @@ const file = (()=>{
         e.stopPropagation();
     }
 
+    // ダウンロードファイル名が分かるファイル書き込み
+    // APIは実験的なものなので注意
+    const handler_download_json_file2 = async ()=>{
+
+        const o = { a:100, b:777, };
+
+        let blob = new Blob( [JSON.stringify(o)], { "type": "text/plain" } );
+
+        const opts = {
+            suggestedName: project.local_save_data_name()+".json",
+            types: [
+                {
+                    description: "JSONファイル",
+                    accept: { "text/plain": [".json"] },
+                },
+            ],
+        };
+
+        let success = true;
+        let newHandle;
+        try{
+            newHandle = await window.showSaveFilePicker(opts);
+        }catch(error){
+            success = false;
+        }finally{
+            if(success){
+    
+                document.querySelector("#download_json_file2").innerHTML = newHandle.name.replace(".json","");
+    
+                // 書き込み先の FileSystemWritableFileStream を作成する
+                const writableStream = await newHandle.createWritable();
+                await writableStream.write(blob);
+                await writableStream.close();
+                console.log("handler_download_json_file2:save successed");
+            }
+        }
+    }
+
     // aタグを使ったダウンロード
     const handler_download_json_file = (e)=>{
 
@@ -77,6 +115,7 @@ const file = (()=>{
         document.querySelector("#local_load").addEventListener("click",handler_local_load);
         document.querySelector("#local_save").addEventListener("click",handler_local_save);
         document.querySelector("#test01").addEventListener("click",handler_download_json_file);
+        document.querySelector("#download_json_file2").addEventListener("click",handler_download_json_file2);
         document.querySelector("#upload_json_file").addEventListener("change",handler_upload_json_file_change);
         document.querySelector("#upload_json_file").addEventListener("cancel",handler_upload_json_file_cancel);
     }
