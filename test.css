@@ -1,8 +1,18 @@
-#test01{
+
+#local_load,
+#local_save,
+#test01,
+#upload_json_file_label{
     display:block;
     background-color:#345;
     color:aqua;
+    user-select:none;
 
-    width:10vh;
-    height:10vh;
+    font-size:1.7vh;
+    width:20vh;
+    height:3vh;
+}
+
+#upload_json_file{
+    display:none;
 }
